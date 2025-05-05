@@ -1,0 +1,27 @@
+# PersistentVolume Pv, define espacio en disco disponible
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: laravel-sqlite-pv # Nombre del PersistentVolume
+  namespace: laravel-app # Namespace donde se encuentra el PersistentVolume
+spec:
+  capacity:
+    storage: 1Gi # Capacidad del PersistentVolume 1GB
+  accessModes:
+    - ReadWriteOnce # Modo de acceso al PersistentVolume
+  hostPath:
+    path: /mnt/data/laravel # Ruta en el host donde se almacenara el PersistentVolume
+
+# PersistentVolumeClaim Pvc
+# Recurso que solicita espacio en disco
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: laravel-sqlite-pvc # Nombre del PersistentVolumeClaim
+  namespace: laravel-app # Namespace donde se encuentra el PersistentVolumeClaim
+spec:
+  accessModes:
+    - ReadWriteOnce # Modo de acceso al PersistentVolumeClaim
+  resources:
+    requests:
+      storage: 1Gi # Capacidad solicitada del PersistentVolumeClaim 1GB
