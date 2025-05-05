@@ -1,0 +1,10 @@
+# ConfigMap almacena variables de entorno No sencibles
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: laravel-config # Nombre del ConfigMap
+  namespace: laravel-app # Namespace donde se encuentra el ConfigMap
+data:
+  APP_ENV: "production" # Entorno de la aplicación
+  APP_DEBUG: "false" # Habilitar o deshabilitar el modo de depuración
+  APP_NAME: "LaravelKube" # Nombre de la aplicación
