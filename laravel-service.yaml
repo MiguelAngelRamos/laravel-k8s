@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: laravel-service # Nombre del servicio
+  namespace: laravel-app # Namespace donde se encuentra el servicio
+spec:
+  selector:
+    app: laravel # Selector que identifica los Pods gestionados por este
+  type: NodePort # Expone el puerto fuera del cluster
+  ports:
+    - port: 80 # Puerto donde escucha el servicio
+      targetPort: 80 # Puerto donde escucha el contenedor
+      nodePort: 30080 # Puerto donde se expone el servicio en el nodo

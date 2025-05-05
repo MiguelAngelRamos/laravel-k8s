@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteOnce # Modo de acceso al PersistentVolume
   hostPath:
-    path: /mnt/data/laravel # Ruta en el host donde se almacenara el PersistentVolume
+    path: /mnt/data/sqlite # Ruta en el host donde se almacenara el PersistentVolume
 
 # PersistentVolumeClaim Pvc
 # Recurso que solicita espacio en disco
