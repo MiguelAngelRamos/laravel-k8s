@@ -13,13 +13,6 @@ spec:
       labels:
         app: laravel
     spec:
-      initContainers:
-        - name: migrate-db
-          image: mramoscli/laravel-k8s
-          command: ['sh', '-c', 'php artisan migrate --force']
-          volumeMounts:
-            - name: sqlite-volume
-              mountPath: /var/www/html/database
       containers:
         - name: laravel
           image: mramoscli/laravel-k8s
