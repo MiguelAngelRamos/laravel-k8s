@@ -15,7 +15,7 @@ pipeline {
                     kubectl apply -f laravel-pv-pvc.yaml
                     kubectl apply -f laravel-deployment.yaml
                     kubectl apply -f laravel-service.yaml
-                    kubectl rollout status deployment laravel-app -n laravel-app
+                    kubectl rollout status deployment laravel-deployment -n laravel-app
                 '''
             }
         }
