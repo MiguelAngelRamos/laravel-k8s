@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: laravel # nombre del contenedor
-          image: mramoscli/laravel-api
+          image: mramoscli/laravel-k8s
           ports:
             - containerPort: 80 # puerto interno donde laravel escucha
           envFrom:
