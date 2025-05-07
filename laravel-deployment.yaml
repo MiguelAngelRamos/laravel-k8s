@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: laravel
-          image: mramoscli/laravel-k8s
+          image: mramoscli/laravel-k8s          # ← tu nueva imagen
           ports:
             - containerPort: 80
           envFrom:
@@ -23,10 +23,3 @@ spec:
                 name: laravel-config
             - secretRef:
                 name: laravel-secret
-          volumeMounts:
-            - name: sqlite-volume
-              mountPath: /var/www/html/database
-      volumes:
-        - name: sqlite-volume
-          persistentVolumeClaim:
-            claimName: laravel-sqlite-pvc
