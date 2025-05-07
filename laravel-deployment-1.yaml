@@ -1,0 +1,46 @@
+#Deployment controla cuantos pods queremos y con que imagen se deben crear
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel-deployment # Nombre del Deployment
+  namespace: laravel-app # Namespace donde se encuentra el Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: laravel # Selector que identifica los Pods gestionados por este Deployment
+  template:
+    metadata:
+      labels:
+        app: laravel # Etiqueta del Pod
+    spec:
+      containers:
+        - name: laravel # nombre del contenedor
+          image: mramoscli/laravel-k8s
+          ports:
+            - containerPort: 80 # puerto interno donde laravel escucha
+          envFrom:
+            - configMapRef:
+                name: laravel-config
+            - secretRef:
+                name: laravel-secret
+          volumeMounts:
+            - name: sqlite-volume # nombre del volumen
+              mountPath: /var/www/html/database # ruta donde se montara el volume
+      volumes:
+        - name: sqlite-volume # nombre del volumen
+          persistentVolumeClaim:
+            claimName: laravel-sqlite-pvc # nombre del PVC que se utilizara para crear el volumen
+
+
+
+
+
+
+
+
+
+
+# Recursos diseñados para gestionar aplicaciones y sus Pods
+# comienzan con apps/v1
+# Deployment, StatefulSet, DaemonSet, ReplicaSet
