@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clonar YAML repo') {
             steps {
-                git 'https://github.com/MiguelAngelRamos/laravel-k8s.git'
+                git branch: 'main', url: 'https://github.com/MiguelAngelRamos/laravel-k8s.git'
             }
         }
         stage('Deploy en Kubernetes') {
