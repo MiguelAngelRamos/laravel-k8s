@@ -14,12 +14,12 @@ spec:
         app: laravel
     spec:
       initContainers:
-        - name: init-db  # 🏗️ Este contenedor inicializa el archivo en el volumen
-          image: mramoscli/laravel-k8s  # Usamos tu propia imagen
-          command: ['sh', '-c', 'cp /var/www/html/database/database.sqlite /mnt/database/database.sqlite']
+        - name: migrate-db
+          image: mramoscli/laravel-k8s
+          command: ['sh', '-c', 'php artisan migrate --force']
           volumeMounts:
             - name: sqlite-volume
-              mountPath: /mnt/database
+              mountPath: /var/www/html/database
       containers:
         - name: laravel
           image: mramoscli/laravel-k8s
