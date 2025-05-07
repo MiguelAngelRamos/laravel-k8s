@@ -1,46 +1,39 @@
-#Deployment controla cuantos pods queremos y con que imagen se deben crear
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: laravel-deployment # Nombre del Deployment
-  namespace: laravel-app # Namespace donde se encuentra el Deployment
+  name: laravel-deployment
+  namespace: laravel-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: laravel # Selector que identifica los Pods gestionados por este Deployment
+      app: laravel
   template:
     metadata:
       labels:
-        app: laravel # Etiqueta del Pod
+        app: laravel
     spec:
+      initContainers:
+        - name: init-db  # 🏗️ Este contenedor inicializa el archivo en el volumen
+          image: mramoscli/laravel-k8s  # Usamos tu propia imagen
+          command: ['sh', '-c', 'cp /var/www/html/database/database.sqlite /mnt/database/database.sqlite']
+          volumeMounts:
+            - name: sqlite-volume
+              mountPath: /mnt/database
       containers:
-        - name: laravel # nombre del contenedor
+        - name: laravel
           image: mramoscli/laravel-k8s
           ports:
-            - containerPort: 80 # puerto interno donde laravel escucha
+            - containerPort: 80
           envFrom:
             - configMapRef:
                 name: laravel-config
             - secretRef:
                 name: laravel-secret
           volumeMounts:
-            - name: sqlite-volume # nombre del volumen
-              mountPath: /var/www/html/database # ruta donde se montara el volume
+            - name: sqlite-volume
+              mountPath: /var/www/html/database
       volumes:
-        - name: sqlite-volume # nombre del volumen
+        - name: sqlite-volume
           persistentVolumeClaim:
-            claimName: laravel-sqlite-pvc # nombre del PVC que se utilizara para crear el volumen
-
-
-
-
-
-
-
-
-
-
-# Recursos diseñados para gestionar aplicaciones y sus Pods
-# comienzan con apps/v1
-# Deployment, StatefulSet, DaemonSet, ReplicaSet
+            claimName: laravel-sqlite-pvc
